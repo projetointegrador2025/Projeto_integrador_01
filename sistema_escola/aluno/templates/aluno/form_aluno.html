@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Aluno</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light text-dark">
+  <div class="container my-5">
+    <h1 class="mb-4">Cadastro de Aluno</h1>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <!-- Dados do Aluno -->
+      <div class="card mb-4 shadow-sm rounded-4 border-0">
+        <div class="card-header bg-primary text-white rounded-top-4">
+          <h5 class="mb-0">Dados do Aluno</h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            {% for field in aluno_form %}
+              {% if field.label != 'Transferido'%}
+                <div class="col-md-6">
+                  {{ field.label_tag }}
+                  {{ field }}
+                  {% for error in field.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Endereço -->
+      <div class="card mb-4 shadow-sm rounded-4 border-0">
+        <div class="card-header bg-primary text-white">Endereço</div>
+        <div class="card-body">
+          <div class="row g-3">
+            {% for field in endereco_form %}
+              <div class="col-md-4">
+                {{ field.label_tag }}
+                {{ field }}
+                {% for error in field.errors %}
+                  <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Responsável -->
+      <div class="card mb-4 shadow-sm rounded-4 border-0">
+        <div class="card-header bg-primary text-white">Responsável</div>
+        <div class="card-body">
+          <div class="row g-3">
+            {% for field in responsavel_form %}
+              <div class="col-md-6">
+                {{ field.label_tag }}
+                {{ field }}
+                {% for error in field.errors %}
+                  <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+
+      <div class="d-flex justify-content-between">
+        <a href="{% url 'lista_alunos' %}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const cepInput = document.getElementById("id_cep");
+      const logradouro = document.getElementById("id_logradouro");
+      const bairro = document.getElementById("id_bairro");
+      const cidade = document.getElementById("id_cidade");
+      const numero = document.getElementById("id_numero");
+
+      // Criar div de erro
+      const errorDiv = document.createElement("div");
+      errorDiv.id = "cep-error";
+      errorDiv.style.color = "red";
+      errorDiv.style.fontSize = "0.9em";
+      errorDiv.style.marginTop = "4px";
+      cepInput.parentNode.appendChild(errorDiv);
+
+      if (logradouro) logradouro.readOnly = true;
+      if (bairro) bairro.readOnly = true;
+      if (cidade) cidade.readOnly = true;
+
+      if (cepInput) {
+        cepInput.addEventListener("input", function () {
+          this.value = this.value.replace(/\D/g, ""); 
+          errorDiv.textContent = "";
+        });
+
+        cepInput.addEventListener("blur", function () {
+          const cep = cepInput.value;
+
+          if (cep.length === 8) {
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+              .then((response) => {
+                if (!response.ok) throw new Error("Erro ao buscar o CEP.");
+                return response.json();
+              })
+              .then((data) => {
+                if ("erro" in data) {
+                  errorDiv.textContent = "CEP não encontrado.";
+                  limparCamposEndereco();
+                } else {
+                  errorDiv.textContent = "";
+                  if (logradouro) logradouro.value = data.logradouro || "";
+                  if (bairro) bairro.value = data.bairro || "";
+                  if (cidade) cidade.value = data.localidade || "";
+                }
+              })
+              .catch((error) => {
+                console.error("Erro:", error);
+                errorDiv.textContent = "Erro ao buscar o CEP.";
+                limparCamposEndereco();
+              });
+          } else {
+            errorDiv.textContent = "CEP deve ter 8 dígitos.";
+            limparCamposEndereco();
+          }
+        });
+      }
+
+      if (numero) {
+        numero.addEventListener("input", function () {
+          this.value = this.value.replace(/\D/g, "");
+        });
+      }
+
+      function limparCamposEndereco() {
+        if (logradouro) logradouro.value = "";
+        if (bairro) bairro.value = "";
+        if (cidade) cidade.value = "";
+      }
+    });
+
+
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const cpfInput = document.getElementById("id_responsavel-cpf");
+      const telefoneInput = document.getElementById("id_responsavel-telefone")
+
+      if (cpfInput) {
+        const errorDiv = document.createElement("div");
+        errorDiv.id = "cpf-error";
+        errorDiv.style.color = "red";
+        errorDiv.style.fontSize = "0.9em";
+        errorDiv.style.marginTop = "4px";
+        cpfInput.parentNode.appendChild(errorDiv);
+
+        cpfInput.addEventListener("input", function () {
+          this.value = this.value.replace(/\D/g, "");
+          errorDiv.textContent = "";
+        });
+
+        cpfInput.addEventListener("blur", function () {
+          const cpf = cpfInput.value;
+          if (!validarCPF(cpf)) {
+            errorDiv.textContent = "CPF inválido.";
+          } else {
+            errorDiv.textContent = "";
+          }
+        });
+
+        const form = document.querySelector("form");
+        form.addEventListener("submit", function (event) {
+          const cpf = cpfInput.value;
+          if (!validarCPF(cpf)) {
+            event.preventDefault();
+            errorDiv.textContent = "CPF inválido.";
+            cpfInput.focus();
+          }
+        });
+      }
+
+      function validarCPF(cpf) {
+        cpf = cpf.replace(/[^\d]+/g, '');
+        if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+
+        let soma = 0;
+        for (let i = 0; i < 9; i++) soma += parseInt(cpf.charAt(i)) * (10 - i);
+        let resto = 11 - (soma % 11);
+        if (resto === 10 || resto === 11) resto = 0;
+        if (resto !== parseInt(cpf.charAt(9))) return false;
+
+        soma = 0;
+        for (let i = 0; i < 10; i++) soma += parseInt(cpf.charAt(i)) * (11 - i);
+        resto = 11 - (soma % 11);
+        if (resto === 10 || resto === 11) resto = 0;
+        return resto === parseInt(cpf.charAt(10));
+      }
+
+      if (telefoneInput) {
+        telefoneInput.addEventListener('input', function (e) {
+          let value = telefoneInput.value.replace(/\D/g, '');
+          if (value.length > 11) value = value.slice(0, 11);
+
+          let formatted = '';
+          if (value.length > 0) formatted += '(' + value.substring(0, 2);
+          if (value.length >= 3) formatted += ') ' + value.substring(2, 7);
+          if (value.length >= 8) formatted += '-' + value.substring(7, 11);
+
+          telefoneInput.value = formatted;
+        });
+      }
+      
+    });
+  </script>
+</body>
+</html>

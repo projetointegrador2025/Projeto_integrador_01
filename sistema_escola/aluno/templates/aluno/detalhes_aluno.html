@@ -1,0 +1,94 @@
+{% extends 'aluno/base.html' %}
+
+{% block title %}Detalhes do Aluno{% endblock %}
+{% block header %}Detalhes do Aluno{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8">
+    <!-- Dados do Aluno -->
+    <div class="card shadow-sm rounded-4 border-0 mb-4">
+      <div class="card-body">
+        <h5 class="card-title mb-3">Informações do Aluno</h5>
+        <table class="table table-bordered">
+          <tbody>
+            <tr><th>Nome</th><td>{{ aluno.nome }}</td></tr>
+            <tr><th>Série</th><td>{{ aluno.serie }}</td></tr>
+            <tr><th>Data de Nascimento</th><td>{{ aluno.data_nascimento|date:"d/m/Y" }}</td></tr>
+            <tr><th>Sexo</th><td>{{ aluno.sexo }}</td></tr>
+            <tr><th>CPF</th><td>{{ aluno.cpf }}</td></tr>
+            <tr><th>RG</th><td>{{ aluno.rg }}</td></tr>
+            <tr><th>Endereço</th>
+              <td>
+                {{ aluno.endereco.logradouro }}, {{ aluno.endereco.numero }}
+                {{ aluno.endereco.complemento }} – {{ aluno.endereco.bairro }},
+                {{ aluno.endereco.cidade }} – {{ aluno.endereco.estado }}<br>
+                CEP: {{ aluno.endereco.cep }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="mt-3">
+          <a href="{% url 'editar_aluno' aluno.id %}" class="btn btn-primary me-2">Editar Aluno</a>
+          <a href="{% url 'lista_alunos' %}" class="btn btn-outline-secondary">Voltar para Lista</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Responsáveis -->
+    <div class="card shadow-sm rounded-4 border-0">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="card-title mb-0">Responsáveis</h5>
+            <a href="{% url 'adicionar_responsavel' aluno.id %}" class="btn btn-success">Adicionar Responsável</a>
+            </div>
+
+            {% if aluno.responsaveis.all %}
+            <div class="row g-3">
+                {% for responsavel in aluno.responsaveis.all %}
+                <div class="col-12 col-md-6">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+                    <div class="card-body">
+                    <h6 class="card-title fw-bold mb-3 text-primary">{{ responsavel.nome }}</h6>
+                    
+                    <div class="pt-2 pb-2 border-bottom"><strong>Tipo:</strong> 
+                        {% if responsavel.tipo_responsavel == "Outro" and responsavel.tipo_outro %}
+                        {{ responsavel.tipo_outro }}
+                        {% else %}
+                        {{ responsavel.tipo_responsavel }}
+                        {% endif %}
+                    </div>
+
+                    <div class="pt-2 pb-2 border-bottom"><strong>CPF:</strong> {{ responsavel.cpf }}</div>
+                    <div class="pt-2 pb-2 border-bottom"><strong>RG:</strong> {{ responsavel.rg }}</div>
+                    <div class="pt-2 pb-2 border-bottom"><strong>Sexo:</strong> {{ responsavel.sexo }}</div>
+                    <div class="pt-2 pb-2 border-bottom"><strong>Data de nascimento:</strong> {{ responsavel.data_nascimento|date:"d/m/Y" }}</div>
+                    <div class="pt-2 pb-2 border-bottom"><strong>Estado civil:</strong> {{ responsavel.estado_civil }}</div>
+                    <div class="pt-2 pb-2 border-bottom"><strong>Nacionalidade:</strong> {{ responsavel.nacionalidade }}</div>
+                    <div class="pt-2 pb-2 border-bottom"><strong>Email:</strong> {{ responsavel.email }}</div>
+                    
+                    <div class="pt-2 pb-2 mb-3"><strong>Telefone:</strong>
+                        {% if responsavel.telefone %}
+                        {{ responsavel.telefone }}
+                        {% else %}
+                        <span class="text-muted">Não informado</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <a href="{% url 'editar_responsavel' aluno.id responsavel.cpf %}" class="btn btn-sm btn-outline-primary me-2">Editar</a>
+                        <a href="{% url 'excluir_responsavel' aluno.id responsavel.cpf %}" class="btn btn-sm btn-outline-danger">Excluir</a>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-muted">Este aluno não possui responsáveis cadastrados.</p>
+            {% endif %}
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

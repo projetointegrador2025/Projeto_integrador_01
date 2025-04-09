@@ -1,0 +1,48 @@
+:root {
+    --bg-light: #fff;
+    --bg-dark: #121212;
+    --text-light: #000;
+    --text-dark: #fff;
+    --primary: #0d3b66;
+    --accent-yellow: #f4d35e;
+    --accent-orange: #ee964b;
+    --transition: 0.3s ease;
+    --border-radius: 12px;
+  }
+  
+  body {
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    font-family: Arial, sans-serif;
+    transition: var(--transition);
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .dark-mode {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+  }
+  
+  form, .responsavel-form, .telefone-form {
+    border: 1px solid var(--primary);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+    transition: var(--transition);
+  }
+  
+  button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  button:hover {
+    background-color: var(--accent-orange);
+  }

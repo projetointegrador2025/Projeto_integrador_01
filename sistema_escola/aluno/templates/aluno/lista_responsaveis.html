@@ -1,0 +1,21 @@
+{% extends 'aluno/base.html' %}
+
+{% block title %}Lista de Responsáveis{% endblock %}
+{% block header %}Todos os Responsáveis Cadastrados{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for responsavel in responsaveis %}
+            <li>
+                {{ responsavel.nome }} ({{ responsavel.tipo }}) - Aluno: {{ responsavel.aluno.nome }}
+                {% if responsavel.id %}
+                    <a href="{% url 'editar_responsavel' aluno.id responsavel.id %}">Editar</a> |
+                    <a href="{% url 'excluir_responsavel' aluno.id responsavel.id %}">Excluir</a>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>Nenhum responsável cadastrado.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'lista_alunos' %}">Voltar para Lista de Alunos</a>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'aluno/base.html' %}
+
+{% block title %}Confirmar Exclusão{% endblock %}
+{% block header %}Confirmar Exclusão de Aluno{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm p-4">
+  <p class="fs-5 mb-4">Tem certeza de que deseja excluir o aluno <strong>"{{ aluno.nome }}"</strong>?</p>
+
+  <div class="d-flex gap-3">
+    <form id="delete-form" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger" id="confirm-delete">Sim, excluir</button>
+    </form>
+
+    <a href="{% url 'lista_alunos' %}" class="btn btn-secondary">Cancelar</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block content_extra %}
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  document.getElementById('confirm-delete').addEventListener('click', function(event) {
+    event.preventDefault();
+
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: "Essa ação não pode ser desfeita!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sim, excluir',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById('delete-form').submit();
+      }
+    });
+  });
+</script>
+{% endblock %}

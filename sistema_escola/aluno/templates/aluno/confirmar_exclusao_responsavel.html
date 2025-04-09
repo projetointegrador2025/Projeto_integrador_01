@@ -1,0 +1,26 @@
+{% extends 'aluno/base.html' %}
+
+{% block title %}Confirmar Exclusão{% endblock %}
+{% block header %}Confirmar Exclusão de Responsável{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm p-4">
+  <p class="fs-5 mb-4">
+    Tem certeza de que deseja excluir o responsável <strong>"{{ responsavel.nome }}"</strong>?
+  </p>
+
+  <div class="d-flex gap-3">
+    <form id="delete-form" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger" id="confirm-delete">Sim, excluir</button>
+    </form>
+
+    <a href="{% url 'detalhes_aluno' responsavel.aluno.id %}" class="btn btn-secondary">Cancelar</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block content_extra %}
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% endblock %}

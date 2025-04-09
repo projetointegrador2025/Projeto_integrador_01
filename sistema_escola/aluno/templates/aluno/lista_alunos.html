@@ -1,0 +1,119 @@
+{% extends 'aluno/base.html' %}
+
+{% block title %}Lista de Alunos{% endblock %}
+
+{% block header %}Lista de Alunos{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+  <!-- Cartão de Visão Geral -->
+  <div class="col-md-4">
+    <div class="card shadow-sm rounded-4 border-0">
+      <div class="card-body text-center">
+        <h5 class="card-title">Total de Alunos</h5>
+        <p class="display-6 text-primary fw-bold mb-0">{{ total_alunos }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cartão de Últimos Alunos -->
+  <div class="col-md-8">
+    <div class="card shadow-sm rounded-4 border-0">
+      <div class="card-body">
+        <h5 class="card-title mb-3">Últimos Alunos Cadastrados</h5>
+        <ul class="list-group list-group-flush">
+          {% for aluno in alunos_recentes|slice:":3" %}
+            <li class="list-group-item">{{ aluno.nome }} <span class="text-muted">– Série: {{ aluno.serie }}</span></li>
+          {% empty %}
+            <li class="list-group-item text-muted">Nenhum aluno cadastrado ainda.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="my-5">
+
+<!-- Filtro de Alunos -->
+<div class="card shadow-sm rounded-4 border-0 mb-4">
+  <div class="card-body">
+    <h5 class="card-title mb-3">Filtrar Alunos</h5>
+    <form method="get" class="row g-3">
+      <div class="col-md-4">
+        <input type="text" name="busca" class="form-control" placeholder="Buscar por nome" value="{{ request.GET.busca }}">
+      </div>
+      <div class="col-md-4">
+        <select name="serie" class="form-select">
+          <option value="">Todas as séries</option>
+          {% for s in series %}
+            <option value="{{ s }}" {% if request.GET.serie == s %}selected{% endif %}>{{ s }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-4 d-grid">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Lista de Alunos -->
+<div class="card shadow-sm rounded-4 border-0 mb-4">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="card-title mb-0">Alunos Cadastrados</h5>
+      <a href="{% url 'cadastrar_aluno' %}" class="btn btn-success">+ Novo Aluno</a>
+    </div>
+
+    <ul class="list-group list-group-flush">
+      {% for aluno in page_obj %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          
+          <span>
+            {{ aluno.nome }} – {{ aluno.serie }}
+            {% if aluno.transferido %}
+              <span class="text-danger fw-semibold">(Transferido)</span>
+            {% endif %}
+          </span>
+
+          <div class="d-flex flex-wrap">
+            <a href="{% url 'detalhes_aluno' aluno.id %}" class="btn btn-sm btn-info me-2 mb-2">Detalhes</a>
+            <a href="{% url 'editar_aluno' aluno.id %}" class="btn btn-sm btn-warning me-2 mb-2">Editar</a>
+            <a href="{% url 'excluir_aluno' aluno.id %}" class="btn btn-sm btn-danger mb-2">Excluir</a>
+          </div>
+        </li>
+      {% empty %}
+        <li class="list-group-item text-muted">Nenhum aluno cadastrado.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<!-- Paginação -->
+<nav aria-label="Navegação de páginas">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?busca={{ busca }}&serie={{ serie }}&page=1">Primeira</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?busca={{ busca }}&serie={{ serie }}&page={{ page_obj.previous_page_number }}">Anterior</a>
+      </li>
+    {% endif %}
+
+    <li class="page-item disabled">
+      <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+    </li>
+
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?busca={{ busca }}&serie={{ serie }}&page={{ page_obj.next_page_number }}">Próxima</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?busca={{ busca }}&serie={{ serie }}&page={{ page_obj.paginator.num_pages }}">Última</a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endblock %}
