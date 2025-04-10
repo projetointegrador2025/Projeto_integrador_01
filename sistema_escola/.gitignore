@@ -1,0 +1,21 @@
+# Ignorar ambiente virtual
+venv/
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar arquivos de compilação Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignorar arquivos de banco de dados temporários (PostgreSQL)
+*.sql
+*.sql.gz
+
+# Ignorar arquivos de configuração do sistema operacional (geralmente não são relevantes para o projeto)
+*.DS_Store  # Para MacOS
+Thumbs.db    # Para Windows
+
+# Ignorar arquivos de banco de dados SQLite (caso esteja usando SQLite em desenvolvimento)
+*.sqlite3
