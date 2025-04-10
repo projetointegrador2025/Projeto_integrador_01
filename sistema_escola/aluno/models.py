@@ -1,13 +1,17 @@
 from django.db import models
+from datetime import date
 
 SN = [(True, 'SIM'), (False, 'NÃO')]
 SEXO = [('MASCULINO', 'MASCULINO'),
         ('FEMININO', 'FEMININO'),
         ('OUTRO', 'OUTRO')]
-ESTADO_CIVIL =[('SOLTEIRO(A)', 'SOLTEIRO(A)'),
-                ('CASADO(A)', 'CASADO(A)'),
-                ('DIVORCIADO(A)', 'DIVORCIADO(A)'),
-                ('VIÚVO(A)'), ('VIÚVO(A)')]
+ESTADO_CIVIL = [
+    ('SOLTEIRO(A)', 'SOLTEIRO(A)'),
+    ('CASADO(A)', 'CASADO(A)'),
+    ('DIVORCIADO(A)', 'DIVORCIADO(A)'),
+    ('VIÚVO(A)', 'VIÚVO(A)') 
+]
+
 SERIES = [
     ('1°A', '1°A'), ('1°B', '1°B'), ('1°C', '1°C'), ('1°D', '1°D'),
     ('2°A', '2°A'), ('2°B', '2°B'), ('2°C', '2°C'), ('2°D', '2°D'),
@@ -39,7 +43,7 @@ class Aluno(models.Model):
     nome = models.CharField("Nome do Aluno", max_length=100)
     sexo = models.CharField("Sexo", max_length=10, choices=SEXO)
     nacionalidade = models.CharField("Nacionalidade", max_length=20, choices=NACIONALIDADE)
-    data_nascimento = models.DateField("Data de Nascimento")
+    data_nascimento = models.DateField(("Data de Nascimento"), default=date(2010, 1, 1))
     serie = models.CharField("Série", max_length=3, choices=SERIES)
     transferido = models.CharField("Transferido", max_length=3, choices=SN)
     restricao_alimentar = models.CharField("Restrição Alimentar", max_length=30, default="N/A")
@@ -68,7 +72,7 @@ class Responsavel(models.Model):
     ])
     tipo_responsavel_outro = models.CharField("Se outro, especifique", max_length=50, blank=True)
 
-    data_nascimento = models.DateField("Data de Nascimento")
+    data_nascimento = models.DateField(("Data de Nascimento"), default=date(2010, 1, 1))
     email = models.EmailField("Email", blank=True)
 
     telefone = models.CharField("Telefone", max_length=15)

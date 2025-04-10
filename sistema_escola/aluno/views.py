@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.paginator import Paginator
-from .models import Aluno, Responsavel, Telefone
-from .forms import AlunoForm, ResponsavelForm, EnderecoForm, TelefoneForm
+from .models import Aluno, Responsavel
+from .forms import AlunoForm, ResponsavelForm, EnderecoForm
 
 def login_view(request):
     if request.method == 'POST':

@@ -23,5 +23,5 @@ class AlunoAdmin(admin.ModelAdmin):
 
 @admin.register(Responsavel)
 class ResponsavelAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'tipo', 'aluno', 'telefone')
-    search_fields = ('nome', 'tipo', 'telefone')
+    list_display = ('nome', 'tipo_responsavel', 'aluno', 'telefone')
+    search_fields = ('nome', 'tipo_responsavel', 'telefone')
