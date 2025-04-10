@@ -122,16 +122,12 @@ USE_TZ = True
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Configuração dos arquivos estáticos
 STATIC_URL = '/static/'
 
-# Configuração para coletar arquivos estáticos em produção
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Caminho onde os arquivos estáticos serão coletados
 
-# Se você tiver arquivos estáticos adicionais fora da pasta de apps, pode usar STATICFILES_DIRS
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',  # Ajuste conforme sua estrutura de pastas, se necessário
-]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
