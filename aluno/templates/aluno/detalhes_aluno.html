@@ -12,7 +12,7 @@
         <h5 class="card-title mb-3">Informações do Aluno</h5>
         <table class="table table-bordered">
           <tbody>
-            <tr><th>Transferido</th><td>{{ aluno.transferido }}</td></tr>
+            <tr><th>Transferido</th><td>{{ aluno.transferido|yesno:"SIM,NÃO" }}</td></tr>
             <tr><th>Nome</th><td>{{ aluno.nome }}</td></tr>
             <tr><th>Série</th><td>{{ aluno.serie }}</td></tr>
             <tr><th>RA</th><td>{{ aluno.ra }}</td></tr>
@@ -20,8 +20,8 @@
             <tr><th>Sexo</th><td>{{ aluno.sexo }}</td></tr>
             <tr><th>Nacionalidade</th><td>{{ aluno.nacionalidade }}</td></tr>
             <tr><th>Restrição Alimentar</th><td>{{ aluno.restricao_alimentar }}</td></tr>
-            <tr><th>Uso da Imagem</th><td>{{ aluno.uso_imagem }}</td></tr>
-            <tr><th>Saída sem Acompanhante</th><td>{{ aluno.saida_sem_acompanhante }}</td></tr>
+            <tr><th>Uso da Imagem</th><td>{{ aluno.uso_imagem|yesno:"SIM,NÃO" }}</td></tr>
+            <tr><th>Saída sem Acompanhante</th><td>{{ aluno.saida_sem_acompanhante|yesno:"SIM,NÃO" }}</td></tr>
             <tr><th>Endereço</th>
               <td>
                 {{ aluno.endereco.logradouro }}, {{ aluno.endereco.numero }}
