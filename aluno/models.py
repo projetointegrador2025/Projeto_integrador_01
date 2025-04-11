@@ -45,10 +45,10 @@ class Aluno(models.Model):
     nacionalidade = models.CharField("Nacionalidade", max_length=20, choices=NACIONALIDADE)
     data_nascimento = models.DateField(("Data de Nascimento"), default=date(2010, 1, 1))
     serie = models.CharField("Série", max_length=3, choices=SERIES)
-    transferido = models.CharField("Transferido", max_length=3, choices=SN)
+    transferido = models.BooleanField("Transferido", choices=SN, default=False, blank=True )
     restricao_alimentar = models.CharField("Restrição Alimentar", max_length=30, default="N/A")
-    uso_imagem = models.CharField("Autorização de Uso de Imagem", max_length=3, choices=SN)
-    saida_sem_acompanhante = models.CharField("Saída sem Acompanhante", max_length=3, choices=SN)
+    uso_imagem = models.BooleanField("Autorização de Uso de Imagem", choices=SN)
+    saida_sem_acompanhante = models.BooleanField("Saída sem Acompanhante", choices=SN)
     endereco = models.OneToOneField(Endereco, on_delete=models.CASCADE)
 
     def __str__(self):

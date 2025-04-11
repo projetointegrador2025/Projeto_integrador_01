@@ -52,6 +52,7 @@ class AlunoForm(forms.ModelForm):
             'transferido': forms.Select(attrs={'class': 'form-select'}),
             'restricao_alimentar': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'não', 'style': 'text-transform: uppercase;'}),
             'uso_imagem': forms.Select(attrs={'class': 'form-select'}),
+            'saida_sem_acompanhante': forms.Select(attrs={'class': 'form-select'}),
         }
 
     def clean(self):
