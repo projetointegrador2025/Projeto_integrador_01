@@ -40,12 +40,15 @@ class Endereco(models.Model):
 
 class Aluno(models.Model): 
     ra = models.CharField("RA do Aluno", max_length=20, unique=True)
+    rm = models.CharField("RM (Registro de Matrícula)", max_length=20, unique=True)
     nome = models.CharField("Nome do Aluno", max_length=100)
     sexo = models.CharField("Sexo", max_length=10, choices=SEXO)
     nacionalidade = models.CharField("Nacionalidade", max_length=20, choices=NACIONALIDADE)
     data_nascimento = models.DateField(("Data de Nascimento"), default=date(2010, 1, 1))
     serie = models.CharField("Série", max_length=3, choices=SERIES)
     transferido = models.BooleanField("Transferido", choices=SN, default=False, blank=True )
+    necessidades_especiais = models.BooleanField("Necessidades Especiais", choices=SN, default=False)
+    descricao_necessidade = models.TextField("Descrição da Necessidade e CID", blank=True)
     restricao_alimentar = models.CharField("Restrição Alimentar", max_length=30, default="N/A")
     uso_imagem = models.BooleanField("Autorização de Uso de Imagem", choices=SN)
     saida_sem_acompanhante = models.BooleanField("Saída sem Acompanhante", choices=SN)

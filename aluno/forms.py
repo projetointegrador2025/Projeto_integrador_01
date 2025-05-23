@@ -39,17 +39,21 @@ class AlunoForm(forms.ModelForm):
     class Meta:
         model = Aluno
         fields = [
-            'ra', 'nome', 'sexo', 'nacionalidade', 'data_nascimento', 'serie',
-            'transferido', 'restricao_alimentar', 'uso_imagem', 'saida_sem_acompanhante'
+            'ra', 'rm', 'nome', 'sexo', 'nacionalidade', 'data_nascimento', 'serie',
+            'transferido', 'necessidades_especiais', 'descricao_necessidade',
+            'restricao_alimentar', 'uso_imagem', 'saida_sem_acompanhante'
         ]
         widgets = {
             'ra': forms.TextInput(attrs={'class': 'form-control', 'style': 'text-transform: uppercase;'}),
+            'rm': forms.TextInput(attrs={'class': 'form-control', 'style': 'text-transform: uppercase;'}),
             'nome': forms.TextInput(attrs={'class': 'form-control', 'style': 'text-transform: uppercase;'}),
             'sexo': forms.Select(attrs={'class': 'form-select'}),
             'nacionalidade': forms.Select(attrs={'class': 'form-select'}),
-            'data_nascimento': forms.DateInput(attrs={'type': 'date', 'class':'form-control'}),
+            'data_nascimento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'serie': forms.Select(attrs={'class': 'form-select'}),
             'transferido': forms.Select(attrs={'class': 'form-select'}),
+            'necessidades_especiais': forms.Select(attrs={'class': 'form-select'}),
+            'descricao_necessidade': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'style': 'text-transform: uppercase;'}),
             'restricao_alimentar': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'não', 'style': 'text-transform: uppercase;'}),
             'uso_imagem': forms.Select(attrs={'class': 'form-select'}),
             'saida_sem_acompanhante': forms.Select(attrs={'class': 'form-select'}),
@@ -57,11 +61,12 @@ class AlunoForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        for field in ['ra', 'nome', 'restricao_alimentar']:
+        for field in ['ra', 'rm', 'nome', 'restricao_alimentar', 'descricao_necessidade']:
             valor = cleaned_data.get(field)
             if valor and isinstance(valor, str):
                 cleaned_data[field] = valor.upper()
         return cleaned_data
+
 
 
 class ResponsavelForm(forms.ModelForm):
