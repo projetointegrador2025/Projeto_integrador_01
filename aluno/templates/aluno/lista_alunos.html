@@ -72,7 +72,7 @@
           
           <span>
             {{ aluno.nome }} – {{ aluno.serie }}
-            {% if aluno.ativo %}
+            {% if aluno.ativo == False %}
               <span class="text-danger fw-semibold">(Inativo)</span>
             {% endif %}
           </span>
