@@ -9,7 +9,7 @@ class ResponsavelInline(admin.TabularInline):
 class AlunoAdmin(admin.ModelAdmin):
     list_display = ('ra', 'nome', 'serie', 'get_cidade', 'get_telefones')
     search_fields = ('nome', 'ra', 'endereco__cidade')
-    list_filter = ('serie', 'transferido')
+    list_filter = ('serie', 'ativo')
     inlines = [ResponsavelInline]
 
     def get_cidade(self, obj):

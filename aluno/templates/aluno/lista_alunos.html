@@ -72,8 +72,8 @@
           
           <span>
             {{ aluno.nome }} – {{ aluno.serie }}
-            {% if aluno.transferido %}
-              <span class="text-danger fw-semibold">(Transferido)</span>
+            {% if aluno.ativo %}
+              <span class="text-danger fw-semibold">(Inativo)</span>
             {% endif %}
           </span>
 

@@ -40,7 +40,7 @@ class AlunoForm(forms.ModelForm):
         model = Aluno
         fields = [
             'ra', 'rm', 'nome', 'sexo', 'nacionalidade', 'data_nascimento', 'serie',
-            'transferido', 'necessidades_especiais', 'descricao_necessidade',
+            'ativo', 'necessidades_especiais',
             'restricao_alimentar', 'uso_imagem', 'saida_sem_acompanhante'
         ]
         widgets = {
@@ -51,9 +51,8 @@ class AlunoForm(forms.ModelForm):
             'nacionalidade': forms.Select(attrs={'class': 'form-select'}),
             'data_nascimento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'serie': forms.Select(attrs={'class': 'form-select'}),
-            'transferido': forms.Select(attrs={'class': 'form-select'}),
-            'necessidades_especiais': forms.Select(attrs={'class': 'form-select'}),
-            'descricao_necessidade': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'style': 'text-transform: uppercase;'}),
+            'ativo': forms.Select(attrs={'class': 'form-select'}),
+            'necessidades_especiais': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'não', 'style': 'text-transform: uppercase;'}),
             'restricao_alimentar': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'não', 'style': 'text-transform: uppercase;'}),
             'uso_imagem': forms.Select(attrs={'class': 'form-select'}),
             'saida_sem_acompanhante': forms.Select(attrs={'class': 'form-select'}),
@@ -61,7 +60,7 @@ class AlunoForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        for field in ['ra', 'rm', 'nome', 'restricao_alimentar', 'descricao_necessidade']:
+        for field in ['ra', 'rm', 'nome', 'restricao_alimentar', 'necessidades_especiais']:
             valor = cleaned_data.get(field)
             if valor and isinstance(valor, str):
                 cleaned_data[field] = valor.upper()
