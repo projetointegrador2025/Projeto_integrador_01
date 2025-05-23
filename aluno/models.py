@@ -40,7 +40,7 @@ class Endereco(models.Model):
 
 class Aluno(models.Model): 
     ra = models.CharField("RA do Aluno", max_length=20, unique=True)
-    rm = models.CharField("RM (Registro de Matrícula)", max_length=20, unique=True)
+    rm = models.CharField("RM (Registro de Matrícula)", max_length=20, unique=True, default="00000")
     nome = models.CharField("Nome do Aluno", max_length=100)
     sexo = models.CharField("Sexo", max_length=10, choices=SEXO)
     nacionalidade = models.CharField("Nacionalidade", max_length=20, choices=NACIONALIDADE)
