@@ -46,7 +46,7 @@ class Aluno(models.Model):
     nacionalidade = models.CharField("Nacionalidade", max_length=20, choices=NACIONALIDADE)
     data_nascimento = models.DateField(("Data de Nascimento"), default=date(2010, 1, 1))
     serie = models.CharField("Série", max_length=3, choices=SERIES)
-    ativo = models.BooleanField("Transferido", choices=SN, default=False, blank=True )
+    ativo = models.BooleanField("Ativo", choices=SN, default=False, blank=True )
     necessidades_especiais = models.CharField("Necessidades Especias (Nome e CID)", max_length=30, default="N/A")
     restricao_alimentar = models.CharField("Restrição Alimentar", max_length=30, default="N/A")
     uso_imagem = models.BooleanField("Autorização de Uso de Imagem", choices=SN)
