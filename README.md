@@ -20,11 +20,11 @@ Frontend:
   
 Backend:
 * Django (Python)
-* Django REST Framework (caso se opte por uma API)
   
 Banco de Dados:
-* PostgreSQL (ou outro banco de dados relacional compatível com Django)
+* PostgreSQL 
   
 Outras ferramentas:
 * Git para controle de versão
-* Heroku ou outra plataforma para deploy (caso aplicável)
+* Render para deploy
+  
