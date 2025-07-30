@@ -76,10 +76,10 @@ WSGI_APPLICATION = 'sistema_escola.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db_escola_s5q8',
-        'USER': 'admin',
-        'PASSWORD': 'eRcneuDkYZYH7MVDCi8RWntAXoETB682',
-        'HOST': 'dpg-d0nvrendiees739goi80-a.oregon-postgres.render.com',
+        'NAME': 'sistema-escola-db',
+        'USER': 'sistema_escola_db_user',
+        'PASSWORD': 'o3F5dPchoo6tH9j9lX8MSLdbPiBk6MUs',
+        'HOST': 'dpg-d23ns4ruibrs73a75i40-a.oregon-postgres.render.com',
         'PORT': '5432',
     }
 }
