@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'sistema_escola.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sistema-escola-db',
+        'NAME': 'sistema_escola_db',
         'USER': 'sistema_escola_db_user',
         'PASSWORD': 'o3F5dPchoo6tH9j9lX8MSLdbPiBk6MUs',
         'HOST': 'dpg-d23ns4ruibrs73a75i40-a.oregon-postgres.render.com',
