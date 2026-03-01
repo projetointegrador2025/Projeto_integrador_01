@@ -79,7 +79,7 @@ DATABASES = {
         'NAME': 'sistemaescoladb_3c9v',
         'USER': 'admin',
         'PASSWORD': 'eCl0flsYGmr9uLlq9luY5gJJZVcBvuy5',
-        'HOST': 'dpg-d6i1m6fkijhs73fpt41g-a',
+        'HOST': 'dpg-d6i1m6fkijhs73fpt41g-a.oregon-postgres.render.com',
         'PORT': '5432',
     }
 }
